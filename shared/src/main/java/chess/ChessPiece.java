@@ -19,9 +19,6 @@ public class ChessPiece {
         setPieceType(type);
     }
 
-    /**
-     * The various different chess piece options
-     */
     public enum PieceType {
         KING,
         QUEEN,
@@ -30,8 +27,6 @@ public class ChessPiece {
         ROOK,
         PAWN
     }
-
-
 
     public void setPieceColor(ChessGame.TeamColor pieceColor) {
         boolean validPieceColor = false;
@@ -47,16 +42,24 @@ public class ChessPiece {
         this.pieceColor = pieceColor;
     }
 
-    /**
-     * @return Which team this chess piece belongs to
-     */
+    public void setPieceType(PieceType type) {
+        boolean validPieceType = false;
+        for (PieceType pieceType : PieceType.values()) {
+            if (pieceType == type) {
+                validPieceType = true;
+                break;
+            }
+        }
+        if (!validPieceType) {
+            throw new IllegalArgumentException("Invalid piece type: " + type);
+        }
+        this.type = type;
+    }
+
     public ChessGame.TeamColor getTeamColor() {
         return pieceColor;
     }
 
-    /**
-     * @return which type of chess piece this piece is
-     */
     public PieceType getPieceType() {
         return type;
     }
@@ -85,17 +88,5 @@ public class ChessPiece {
         return Objects.hash(type, pieceColor);
     }
 
-    public void setPieceType(PieceType type) {
-        boolean validPieceType = false;
-        for (PieceType pieceType : PieceType.values()) {
-            if (pieceType == type) {
-                validPieceType = true;
-                break;
-            }
-        }
-        if (!validPieceType) {
-            throw new IllegalArgumentException("Invalid piece type: " + type);
-        }
-        this.type = type;
-    }
+
 }
