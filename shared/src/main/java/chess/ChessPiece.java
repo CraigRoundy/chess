@@ -1,6 +1,7 @@
 package chess;
 
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * Represents a single chess piece
@@ -9,8 +10,13 @@ import java.util.Collection;
  * signature of the existing methods.
  */
 public class ChessPiece {
+    private PieceType type;
+    private ChessGame.TeamColor pieceColor;
 
+    //Initiates piece obj if color and type are valid
     public ChessPiece(ChessGame.TeamColor pieceColor, ChessPiece.PieceType type) {
+        setPieceColor(pieceColor);
+        setPieceType(type);
     }
 
     /**
@@ -25,18 +31,34 @@ public class ChessPiece {
         PAWN
     }
 
+
+
+    public void setPieceColor(ChessGame.TeamColor pieceColor) {
+        boolean validPieceColor = false;
+        for (ChessGame.TeamColor pieceColor2 : ChessGame.TeamColor.values()) {
+            if (pieceColor2 == pieceColor) {
+                validPieceColor = true;
+                break;
+            }
+        }
+        if (!validPieceColor) {
+            throw new IllegalArgumentException("Invalid piece color: " + pieceColor);
+        }
+        this.pieceColor = pieceColor;
+    }
+
     /**
      * @return Which team this chess piece belongs to
      */
     public ChessGame.TeamColor getTeamColor() {
-        throw new RuntimeException("Not implemented");
+        return pieceColor;
     }
 
     /**
      * @return which type of chess piece this piece is
      */
     public PieceType getPieceType() {
-        throw new RuntimeException("Not implemented");
+        return type;
     }
 
     /**
@@ -48,5 +70,32 @@ public class ChessPiece {
      */
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessPiece that = (ChessPiece) o;
+        return type == that.type && pieceColor == that.pieceColor;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, pieceColor);
+    }
+
+    public void setPieceType(PieceType type) {
+        boolean validPieceType = false;
+        for (PieceType pieceType : PieceType.values()) {
+            if (pieceType == type) {
+                validPieceType = true;
+                break;
+            }
+        }
+        if (!validPieceType) {
+            throw new IllegalArgumentException("Invalid piece type: " + type);
+        }
+        this.type = type;
     }
 }
