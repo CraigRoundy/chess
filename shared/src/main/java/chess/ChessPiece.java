@@ -87,38 +87,69 @@ public class ChessPiece {
         //Filter invalid moves
 
         Collection<ChessMove> moves = new ArrayList<>();
-
+        int currentRow = myPosition.getRow();
+        int currentColumn = myPosition.getColumn();
         PieceType pieceType = getPieceType();
 
         if (pieceType == PieceType.KING) {
-            moves.add(new ChessMove(myPosition, new ChessPosition( myPosition.getRow() + 1, myPosition.getColumn() - 1), null));
-            moves.add(new ChessMove(myPosition, new ChessPosition( myPosition.getRow() + 1, myPosition.getColumn()), null));
-            moves.add(new ChessMove(myPosition, new ChessPosition( myPosition.getRow() + 1, myPosition.getColumn() + 1), null));
-            moves.add(new ChessMove(myPosition, new ChessPosition( myPosition.getRow() , myPosition.getColumn() - 1), null));
-            moves.add(new ChessMove(myPosition, new ChessPosition( myPosition.getRow() , myPosition.getColumn() + 1), null));
-            moves.add(new ChessMove(myPosition, new ChessPosition( myPosition.getRow() - 1, myPosition.getColumn() - 1), null));
-            moves.add(new ChessMove(myPosition, new ChessPosition( myPosition.getRow() - 1, myPosition.getColumn()), null));
-            moves.add(new ChessMove(myPosition, new ChessPosition( myPosition.getRow() - 1, myPosition.getColumn() + 1), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition( currentRow + 1, currentColumn - 1), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition( currentRow + 1, currentColumn), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition( currentRow + 1, currentColumn + 1), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition( currentRow , currentColumn - 1), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition( currentRow , currentColumn + 1), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition( currentRow - 1, currentColumn - 1), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition( currentRow - 1, currentColumn), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition( currentRow - 1, currentColumn + 1), null));
         }
         else if (pieceType == PieceType.QUEEN) {
             //Queen moves up to seven spaces in any direction
-            for(int i = 0; i < 8; i++) {
-                for(int j = 0; j < 8; j++) {
-                    moves.add(new ChessMove(myPosition, new ChessPosition( myPosition.getRow() + 1, myPosition.getColumn() + 1), null));
+            for(int i = 1; i < 9; i++) {
+                for(int j = 1; j < 9; j++) {
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow + i, currentColumn + j), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow + i, currentColumn - j), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow - i, currentColumn + j), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow - i, currentColumn - j), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow + i, currentColumn), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow - i, currentColumn), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow, currentColumn + j), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow, currentColumn - j), null));
                 }
             }
         }
         else if (pieceType == PieceType.BISHOP) {
-
+            for(int i = 1; i < 9; i++) {
+                for (int j = 1; j < 9; j++) {
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow + i, currentColumn + j), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow + i, currentColumn - j), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow - i, currentColumn + j), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow - i, currentColumn - j), null));
+                }
+            }
         }
         else if (pieceType == PieceType.KNIGHT) {
-
+            moves.add(new ChessMove(myPosition, new ChessPosition(currentRow + 2, currentColumn + 1), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition(currentRow + 2, currentColumn - 1), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition(currentRow + 1, currentColumn + 2), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition(currentRow + 1, currentColumn - 2), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition(currentRow - 2, currentColumn + 1), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition(currentRow - 2, currentColumn - 1), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition(currentRow - 1, currentColumn + 2), null));
+            moves.add(new ChessMove(myPosition, new ChessPosition(currentRow - 1, currentColumn - 2), null));
         }
         else if (pieceType == PieceType.ROOK) {
-
+            for(int i = 1; i < 9; i++) {
+                for(int j = 1; j < 9; j++) {
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow + i, currentColumn), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow - i, currentColumn), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow, currentColumn + j), null));
+                    moves.add(new ChessMove(myPosition, new ChessPosition(currentRow, currentColumn - j), null));
+                }
+            }
         }
         else if (pieceType == PieceType.PAWN) {
 
+            //If on starting row allow two moves forward
+            if()
         }
         else {
             throw new IllegalArgumentException("Invalid piece type: " + pieceType);
