@@ -147,9 +147,11 @@ public class ChessPiece {
             }
         }
         else if (pieceType == PieceType.PAWN) {
+            // If white pawns move up
 
-            //If on starting row allow two moves forward
-            if()
+            moves.add(new ChessMove(myPosition, new ChessPosition(currentRow, currentColumn), null));
+            // If black pawns move down
+
         }
         else {
             throw new IllegalArgumentException("Invalid piece type: " + pieceType);
