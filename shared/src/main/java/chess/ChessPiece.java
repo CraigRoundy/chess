@@ -66,7 +66,7 @@ public class ChessPiece {
     }
 
 
-    private Collection<ChessMove> trimInvalidMoves(Collection<ChessMove> moves) {
+    private Collection<ChessMove> trimInvalidMoves(ChessBoard board, ChessPosition myPosition, Collection<ChessMove> moves) {
         Collection<ChessMove> invalidMoves = new ArrayList<>();
         for (ChessMove move : moves) {
 
@@ -156,7 +156,7 @@ public class ChessPiece {
         else {
             throw new IllegalArgumentException("Invalid piece type: " + pieceType);
         }
-        trimInvalidMoves(moves);
+        trimInvalidMoves(board,myPosition, moves);
         return moves;
     }
 
