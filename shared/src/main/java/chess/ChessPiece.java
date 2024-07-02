@@ -65,14 +65,32 @@ public class ChessPiece {
         return type;
     }
 
+    //Given a collection of potential moves and the board they are on find out which moves are potentially valid
+    //This does not check if the king is or will be in check
+    public Collection<ChessMove> checkMoves(ChessBoard board, ChessPosition position, Collection<ChessMove> moves) {
+        PieceType pieceType = getPieceType();
+        if (pieceType == PieceType.KING) {
+            //The kings potential moves are invalid if there are other pieces in the way
+            moves.removeIf(move -> board.getPiece(move.getEndPosition()) != null);
+        }
+        if (pieceType == PieceType.QUEEN) {
 
-    private Collection<ChessMove> trimInvalidMoves(ChessBoard board, ChessPosition myPosition, Collection<ChessMove> moves) {
-        Collection<ChessMove> invalidMoves = new ArrayList<>();
-        for (ChessMove move : moves) {
+        }
+        if (pieceType == PieceType.BISHOP) {
+
+        }
+        if (pieceType == PieceType.KNIGHT) {
+
+        }
+        if (pieceType == PieceType.ROOK) {
+
+        }
+        if (pieceType == PieceType.PAWN) {
 
         }
         return moves;
     }
+
     /**
      * Calculates all the positions a chess piece can move to
      * Does not take into account moves that are illegal due to leaving the king in
@@ -87,6 +105,7 @@ public class ChessPiece {
         //Filter invalid moves
 
         Collection<ChessMove> moves = new ArrayList<>();
+        Collection<ChessMove> filteredMoves;
         int currentRow = myPosition.getRow();
         int currentColumn = myPosition.getColumn();
         PieceType pieceType = getPieceType();
@@ -156,10 +175,16 @@ public class ChessPiece {
         else {
             throw new IllegalArgumentException("Invalid piece type: " + pieceType);
         }
-        trimInvalidMoves(board,myPosition, moves);
-        return moves;
+        return checkMoves(board, myPosition, moves);
     }
 
+    @Override
+    public String toString() {
+        return "ChessPiece{" +
+                "type=" + type +
+                ", pieceColor=" + pieceColor +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {
